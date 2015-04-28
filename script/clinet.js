@@ -130,6 +130,7 @@ function readbook(xmldoc) {
     }
     var nextpage = document.createElement("a");
     nextpage.setAttribute("id","next");
+    nextpage.setAttribute("href","#right");
     var page_text = document.createTextNode("下一页");
     nextpage.appendChild(page_text);
     var right = document.getElementById("right");
