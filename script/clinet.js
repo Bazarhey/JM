@@ -34,8 +34,8 @@ function lanmuList(xmldoc) {
             booklist.onclick = function() {
                 var h1 = document.getElementById("h1");
                 $(h1).empty();
-                var right = document.getElementById("right")
-                $(right).empty();
+                var next_page = document.getElementById("next_page")
+                $(next_page).empty();
                 var container = document.getElementById("container");
                 $(container).empty();
                 var left = document.getElementById("left");
@@ -74,15 +74,15 @@ function bookList(xmldoc) {
         booknamelist.setAttribute("href", getbookurl);
         booknamelist.appendChild(bookname);
         left.appendChild(booknamelist);
-//        insterAfter(booknamelist,left);
 
+//点击阅读
         booknamelist.onclick = function() {
             var h1 = document.getElementById("h1");
             $(h1).empty();
             var container = document.getElementById("container");
             $(container).empty();
-            var right = document.getElementById("right");
-            $(right).empty();
+            var next_page = document.getElementById("next_page");
+            $(next_page).empty();
             var readbookurl = this.getAttribute("href");
             bookget(readbookurl);
             return false;
@@ -130,15 +130,62 @@ function readbook(xmldoc) {
     }
     var nextpage = document.createElement("a");
     nextpage.setAttribute("id","next");
-    nextpage.setAttribute("href","#right");
-    var page_text = document.createTextNode("下一页");
-    nextpage.appendChild(page_text);
-    var right = document.getElementById("right");
-    right.appendChild(nextpage);
+    nextpage.setAttribute("href","#next_page");
+    var nextpage_text = document.createTextNode("下一页");
+    nextpage.appendChild(nextpage_text);
+    var next_page = document.getElementById("next_page");
+    next_page.appendChild(nextpage);
+
+    var lastpage = document.createElement("a");
+    lastpage.setAttribute("id","last");
+    lastpage.setAttribute("href","#last_page");
+    var lastpage_text = document.createTextNode("上一页");
+    lastpage.appendChild(lastpage_text);
+    var last_page = document.getElementById("last_page");
+    last_page.appendChild(lastpage);
+//下一页标签
     nextpage.onclick = function() {
+        var h1 = document.getElementById("h1")
+        $(h1).empty();
+        var container = document.getElementById("container");
+        $(container).empty();
+        var next_page = document.getElementById("next_page");
+        $(next_page).empty();
+        page_next();
+        return false;
     }
 
 
+}
+
+function page_next() {
+    var URL = "http://192.168.81.202:8080/GetDateWithServlet?Next";
+    xmlHttp.open("GET", URL, false);
+    xmlHttp.onreadystatechange = next_page;
+    xmlHttp.send(null);
+}
+function next_page() {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        var response =xmlHttp.responseText;
+        var parse = new DOMParser();
+        var xmldoc = parse.parseFromString(response,"text/xml");
+        readbook(xmldoc);
+    }
+}
+
+function page_last() {
+    var URL = "http://192.168.81.202:8080/GetDateWithServlet?Next";
+    xmlHttp.open("GET", URL, false);
+    xmlHttp.onreadystatechange = next_page;
+    xmlHttp.send(null);
+}
+function last_page() {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        var response =xmlHttp.responseText;
+        var parse = new DOMParser();
+        var xmldoc = parse.parseFromString(response,"text/xml");
+        readbook(xmldoc);
+    }
 }
 
 //DOM插入方法
@@ -150,16 +197,6 @@ function insterAfter(newElement, targetElement) {
         parent.insertBefore(newElement, targetElement.nextSibling);
     }
 }
-
-
-//function readBooklist(bookURL) {
-//    var URL = "http://192.168.81.202:8080/GetDateWithServlet?bookList="+ bookURL;
-//    xmlHttp.open("GET", URL, false);
-//    xmlHttp.onreadystatechange = updatePage;
-//    xmlHttp.send(null);
-//}
-//addLoadEvent(getBooklist);
-
 
 addLoadEvent(xmlHttpRequest);
 addLoadEvent(updatePage);
