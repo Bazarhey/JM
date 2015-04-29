@@ -28,7 +28,7 @@ function lanmuList(xmldoc) {
             booklist.setAttribute("href",bookurl);
             var bookname = document.createTextNode(name);
             booklist.appendChild(bookname);
-            var top = document.getElementById("top");
+            var top = document.getElementById("class");
             top.appendChild(booklist);
 
             booklist.onclick = function() {
@@ -38,7 +38,7 @@ function lanmuList(xmldoc) {
                 $(next_page).empty();
                 var container = document.getElementById("container");
                 $(container).empty();
-                var left = document.getElementById("left");
+                var left = document.getElementById("book_list");
                 $(left).empty();
                 var getbooklist = this.getAttribute("href");
                 readBooklist(getbooklist);
@@ -64,7 +64,7 @@ function bookupdatepage() {
 
 //获取书名
 function bookList(xmldoc) {
-    var left = document.getElementById("left");
+    var left = document.getElementById("book_list");
     var result = xmldoc.getElementsByTagName("list");
     for (var i=0; i<result.length; i++) {
         var getbookname = result[i].getAttribute("name");
@@ -147,7 +147,7 @@ function readbook(xmldoc) {
     nextpage.onclick = function() {
         var h1 = document.getElementById("h1")
         $(h1).empty();
-        var container = document.getElementById("container");
+        var container = document.getElementById("article");
         $(container).empty();
         var next_page = document.getElementById("next_page");
         $(next_page).empty();
